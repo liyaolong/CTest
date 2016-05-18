@@ -156,3 +156,37 @@ char* _strstr(const char* dest, const char* src)
 	}
 	return nullptr;
 }
+//memcpy
+void* _memcpy(void* dest, const void* src, size_t count)
+{
+	assert(src != nullptr&&dest != nullptr);
+	//判断dest指针和src指针是否为空，若为空抛出异常
+	char* tmp_dest = (char*)dest;
+	const char* tmp_src = (const char*)src;
+	//将指针dest和指针src由void强转为char，
+	//使得每次均是对内存中的一个字节进行拷贝
+	while (count--)
+		*tmp_dest++ = *tmp_src++;
+	return dest;
+}
+//memmpve
+void* _memmove(void* dest, const void* src, size_t count)
+{
+	assert(src != nullptr&&dest != nullptr);
+	//判断dest指针和src指针是否为空，若为空抛出异常
+	char* tmp_dest = (char*)dest;
+	const char* tmp_src = (const char*)src;
+
+	if (tmp_src < tmp_dest)//当src地址小于dest地址时，从头进行拷贝
+		while (count--)
+			*tmp_dest++ = *tmp_src++;
+	else if (tmp_src > tmp_dest)//当src地址大于dest地址时，从后进行拷贝
+	{
+		tmp_src += count - 1;
+		tmp_dest += count - 1;
+		while (count--)
+			*tmp_dest-- = *tmp_src;
+	}
+	//else(tmp_src==tmp_dest) 此时不进行任何操作
+	return dest;
+}
